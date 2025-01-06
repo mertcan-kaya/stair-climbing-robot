@@ -1,0 +1,129 @@
+int m1p1 = 9;
+int m1p2 = 8;
+int m2p1 = 7;
+int m2p2 = 6;
+int m3p1 = 5;
+int m3p2 = 4;
+int basamak=0;
+const int pivotTime = 500;
+
+
+void setup(){
+  pinMode(m1p1, OUTPUT);
+  pinMode(m1p2, OUTPUT);
+  pinMode(m2p1, OUTPUT);
+  pinMode(m2p2, OUTPUT);
+  pinMode(m3p1, OUTPUT);
+  pinMode(m3p2, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+const int thres = 500;
+const int altThres = 500;
+boolean cikis = true;
+
+void loop(){
+
+ 
+ Serial.print(prox);
+ Serial.print("\t");
+ Serial.println(alt);
+ if (prox < thres && basamak != 3 && cikis){
+  ileri();
+  delay(10); 
+ }
+ else if (alt > altThres && !cikis){
+ geri();
+ delay(10);
+ }
+ else if (prox > thres && basamak != 3 && cikis){
+ yukari();
+ }
+ else if(alt < altThres) asagi();
+ else if (prox < thres && basamak == 3 && cikis){
+  pivot();
+  geri();
+  cikis = !cikis;
+ }
+ if (basamak = 0  && !cikis) cikis = !cikis; 
+} 
+
+
+void asagi(){
+stop();
+//deployLift();
+geri();
+delay(10);
+removeLift(4000);
+basamak--;
+}
+
+void deployLift(){
+  while(analogRead(A2) < 550){
+  digitalWrite(m3p1, HIGH);
+  digitalWrite(m3p2, LOW);
+  delay(10);  
+}
+}
+
+void yukari(){
+  ileri();
+  lift();
+  basamak++;
+}
+
+void lift(){
+while (analogRead(A0) > thres){
+  digitalWrite(m3p1, HIGH);
+  digitalWrite(m3p2, LOW);
+  delay(10); 
+  digitalWrite(m3p2, HIGH);
+}
+delay(200);
+removeLift(4000);
+}
+
+void removeLift(int d){
+  stop();
+  digitalWrite(m3p1, LOW);
+  digitalWrite(m3p2, HIGH);
+  delay(d);
+}
+
+void stop(){
+  digitalWrite(m1p1, LOW);
+  digitalWrite(m1p2, LOW);
+  digitalWrite(m2p1, LOW);
+  digitalWrite(m2p2, LOW);
+}
+
+void ileri(){
+  digitalWrite(m1p1, HIGH);
+  digitalWrite(m1p2, LOW);
+  digitalWrite(m2p1, HIGH);
+  digitalWrite(m2p2, LOW);
+}
+
+void geri(){
+  digitalWrite(m1p1, LOW);
+  digitalWrite(m1p2, HIGH);
+  digitalWrite(m2p1, LOW);
+  digitalWrite(m2p2, HIGH);
+}
+
+
+void pivot (){
+  digitalWrite(m1p1, HIGH);
+  digitalWrite(m1p2, LOW);
+  digitalWrite(m2p1, LOW);
+  digitalWrite(m2p2, HIGH);
+  delay(pivotTime);
+}
+
+void inf1()  { 
+   digitalWrite(3, HIGH);
+
+int prox = analogRead(A0);
+
+}

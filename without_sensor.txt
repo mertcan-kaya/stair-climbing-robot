@@ -1,0 +1,189 @@
+void setup() {
+  pinMode(9, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(3, OUTPUT);
+  Serial.begin(9600);
+
+}
+
+void ileri()  {
+   digitalWrite(9, HIGH);
+   digitalWrite(8, LOW);
+   digitalWrite(7, HIGH);
+   digitalWrite(6, LOW);
+}
+
+void geri()  {
+   digitalWrite(9, LOW);
+   digitalWrite(8, HIGH);
+   digitalWrite(7, LOW);
+   digitalWrite(6, HIGH);
+}
+
+void dur()  {
+   digitalWrite(9, LOW);
+   digitalWrite(8, LOW);
+   digitalWrite(7, LOW);
+   digitalWrite(6, LOW);
+}
+
+void don()  {
+   digitalWrite(9, LOW);
+   digitalWrite(8, HIGH);
+   digitalWrite(7, HIGH);
+   digitalWrite(6, LOW);
+}
+
+void lift_indir()  {
+   digitalWrite(5, HIGH);
+   digitalWrite(4, LOW);  
+}
+
+void lift_kaldir()  {
+   digitalWrite(5, LOW);
+   digitalWrite(4, HIGH);  
+}
+
+void lift_dur()  {
+   digitalWrite(5, LOW);
+   digitalWrite(4, LOW); 
+}
+
+int cikis = 1;
+int basamak = 0;
+
+void loop() {
+  /*
+  lift_indir();-
+  lift_kaldir();
+  lift_dur();
+  dur();  
+  ileri();
+  geri();
+  */
+  
+  if ( cikis == 1 ) {
+    //ileri();
+    //delay(300); //ÇIKARKEN HER BASAMAKTA DÜZ GİTME SÜRESİ
+    if (basamak == 0)  {
+      ileri();
+      delay(500);
+      lift_indir();
+      delay(4000);
+      lift_dur();
+      delay(1000);
+      lift_kaldir();
+      delay(5000);
+      lift_dur();
+      basamak++;
+      
+    }
+    if (basamak == 1)  {
+      ileri();
+      delay(300);
+      lift_indir();
+      delay(4500);
+      lift_dur();
+      delay(1000);
+      lift_kaldir();
+      delay(5500);
+      lift_dur();
+      basamak++;
+      
+    }
+    if (basamak == 2)  {
+      ileri();
+      delay(600);
+      lift_indir();
+      delay(5000);
+      lift_dur();
+      delay(1000);
+      lift_kaldir();
+      delay(7000);
+      lift_dur();
+      basamak++;
+      
+    }
+    if(basamak == 3)  {
+       geri();
+       delay(500);
+       don();
+       delay(2800); //DÖNÜŞ SÜRESİ
+       dur();
+       //geri();
+       //delay(1000); //DÖNDÜKTEN SONRA GERİ GİDİŞ SÜRESİ
+       basamak = 0;
+       cikis = 0;      
+    }
+  }
+  
+  if ( cikis == 0 ) {
+      
+      if(basamak == 0)  {
+          dur();
+          lift_indir();
+          delay(3800);
+          lift_dur();
+          delay(1000);
+          geri();
+          delay(600);
+          lift_kaldir() ;
+          geri();
+          delay(2800);
+          basamak--;
+                    
+      }
+      if(basamak == -1)  {
+          dur();
+          ileri();
+          delay(1500);
+          dur();
+          lift_indir();
+          delay(5000);
+          lift_dur();
+          delay(1000);
+          geri();
+          delay(2000);
+          lift_kaldir() ;
+          geri();
+          delay(2600);
+          geri();
+          delay(1000);
+          dur();
+          basamak--;
+                    
+      }
+      
+      if(basamak == -2)  {
+           dur();
+          ileri();
+          delay(1500);
+          dur();
+          lift_indir();
+          delay(5500);
+          lift_dur();
+          delay(1000);
+          geri();
+          delay(2000);
+          lift_kaldir() ;
+          geri();
+          delay(3500);
+          geri();
+          delay(1500);
+          dur();
+          basamak--;
+                    
+      }
+      
+      if (basamak == -3)  {
+      dur();
+      lift_dur();
+      //basamak = 0;
+      }
+    }
+}
+ 
